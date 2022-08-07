@@ -7,6 +7,8 @@ import com.example.newpos.posnew.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("api/v1/Customer/")
@@ -24,13 +26,26 @@ public class CustomerController {
     @PutMapping(path = "update")
     public String UpdateCustomer(@RequestBody CustomerUpdateRequestDTO customerUpdateRequestDTO){
        String state =  customerService.updateCustomer(customerUpdateRequestDTO);
-        System.out.println(customerUpdateRequestDTO.getCustomerName());
-        System.out.println(customerUpdateRequestDTO.getCustomerID());
-        System.out.println(customerUpdateRequestDTO.getCustomerAddress());
-        System.out.println(customerUpdateRequestDTO.getCustomerSalary());
-        System.out.println(customerUpdateRequestDTO.getContacts());
-        System.out.println(customerUpdateRequestDTO.getNic());
-        System.out.println(customerUpdateRequestDTO.isActiveState());
         return customerUpdateRequestDTO.getCustomerName();
+    }
+
+    @GetMapping(
+            path = "get-by-id",
+            params = "id"
+    )
+    public CustomerDTO getCustomerById(@RequestParam (value = "id") int id){
+
+        CustomerDTO customerDTO = customerService.getCustomerById(id);
+        return  customerDTO;
+    }
+
+    @GetMapping (
+            path = "get-all-customwe"
+    )
+    public List<CustomerDTO> getAllCustomer(){
+
+        List<CustomerDTO>allCustomers = customerService.getAllCustomers();
+        return allCustomers;
+
     }
 }
