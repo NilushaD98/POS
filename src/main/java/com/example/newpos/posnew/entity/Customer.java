@@ -9,33 +9,31 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table(name="customer")
-@TypeDefs({
-        @TypeDef(name="json" ,typeClass = JsonType.class)
-})
+@Table(name = "customer")
+@TypeDefs({@TypeDef(name = "json", typeClass = JsonType.class)})
 public class Customer {
 
     @Id
-    @Column(name="custmoer_id",length=45)
+    @Column(name = "custmoer_id", length = 45)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerID;
-    @Column(name = "customer_name",length=100, nullable = false)
+    @Column(name = "customer_name", length = 100, nullable = false)
     private String customerName;
 
-    @Column(name= "customer_address" , length = 200)
+    @Column(name = "customer_address", length = 200)
     private String customerAddress;
 
-    @Column(name = "customer_salary" ,length=25)
+    @Column(name = "customer_salary", length = 25)
     private double customerSalary;
 
     @Type(type = "json")
-    @Column(name="contact_number", columnDefinition = "json")
+    @Column(name = "contact_number", columnDefinition = "json")
     private ArrayList contacts;
 
-    @Column(name="nic" , length = 12,unique = true)
+    @Column(name = "nic", length = 12, unique = true)
     private String nic;
 
-    @Column(name="active_state", columnDefinition = "TINYINT default '1'")
+    @Column(name = "active_state", columnDefinition = "TINYINT default '1'")
     private boolean activeState;
 
     public Customer(String customerName, String customerAddress, double customerSalary, ArrayList contacts, String nic) {
@@ -122,14 +120,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "customerID=" + customerID +
-                ", customerName='" + customerName + '\'' +
-                ", customerAddress='" + customerAddress + '\'' +
-                ", customerSalary=" + customerSalary +
-                ", contacts=" + contacts +
-                ", nic='" + nic + '\'' +
-                ", activeState=" + activeState +
-                '}';
+        return "Customer{" + "customerID=" + customerID + ", customerName='" + customerName + '\'' + ", customerAddress='" + customerAddress + '\'' + ", customerSalary=" + customerSalary + ", contacts=" + contacts + ", nic='" + nic + '\'' + ", activeState=" + activeState + '}';
     }
 }

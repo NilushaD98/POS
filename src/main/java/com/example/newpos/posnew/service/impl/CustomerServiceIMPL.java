@@ -6,6 +6,8 @@ import com.example.newpos.posnew.dto.request.CustomerUpdateRequestDTO;
 import com.example.newpos.posnew.entity.Customer;
 import com.example.newpos.posnew.repo.CustomerRepo;
 import com.example.newpos.posnew.service.CustomerService;
+import com.example.newpos.posnew.util.mappers.CustomerMapper;
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class CustomerServiceIMPL implements CustomerService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
     @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
 
@@ -40,7 +44,6 @@ public class CustomerServiceIMPL implements CustomerService {
         } else {
             System.out.println("user already saved....");
         }
-
         return customer.getCustomerName() + " Saved";
     }
 
@@ -49,13 +52,11 @@ public class CustomerServiceIMPL implements CustomerService {
 
         if (customerRepo.existsById(customerUpdateRequestDTO.getCustomerID())) {
             Customer customer = customerRepo.getById(customerUpdateRequestDTO.getCustomerID());
-
             customer.setCustomerName(customerUpdateRequestDTO.getCustomerName());
             customer.setCustomerAddress(customerUpdateRequestDTO.getCustomerAddress());
             customer.setCustomerSalary(customerUpdateRequestDTO.getCustomerSalary());
             customer.setContacts(customerUpdateRequestDTO.getContacts());
             customer.setNic(customerUpdateRequestDTO.getNic());
-
             customerRepo.save(customer);
         }
         return " null";
@@ -76,8 +77,9 @@ public class CustomerServiceIMPL implements CustomerService {
 //            );
 //
 //            return  customerDTO;
+            //CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
 
-            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+            CustomerDTO customerDTO = customerMapper.entityToDTO(customer.get());
             return customerDTO;
         } else {
             return null;
@@ -102,9 +104,32 @@ public class CustomerServiceIMPL implements CustomerService {
         List<CustomerDTO> customerDTOS = modelMapper
                 .map(getCustomer, new TypeToken<List<CustomerDTO>>() {
                 }.getType());
-
         return customerDTOS;
+    }
 
+    @Override
+    public boolean deleteCustomer(int id) throws NotFoundException {
+        if(customerRepo.existsById(id)){
+            customerRepo.deleteById(id);
+        }else {
+            throw new NotFoundException("not found exeption");
+        }
+        return true;
+    }
 
+    @Override
+    public List<CustomerDTO> getCustomerByName(String customerName) throws NotFoundException {
+
+        List<Customer> customers = customerRepo.findAllByCustomerNameEquals(customerName);
+        if(customers.size()!=0){
+            List<CustomerDTO> customerDTOList = modelMapper
+                    .map(customers, new TypeToken<List<CustomerDTO>>(){
+
+                    }.getType());
+            return  customerDTOList;
+        }
+        else {
+            throw  new NotFoundException("No Results");
+        }
     }
 }
