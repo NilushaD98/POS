@@ -40,4 +40,7 @@ public interface CustomerService {
     String updateCustomerNSNByQuery(CustomerUpdateNSNByQueryRequestDTO customerUpdateNSNByQueryRequestDTO, int id) throws NotFoundException;
 
     String getCustomerInactiveOrActiveByid(int id) throws NotFoundException;
+
+    CustomerDTO getCustomerByIdAndState(int id, boolean state);
+
 }

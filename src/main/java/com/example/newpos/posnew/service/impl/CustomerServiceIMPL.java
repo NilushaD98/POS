@@ -226,6 +226,22 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NotFoundException("customer not here");
         }
     }
+
+    @Override
+    public CustomerDTO getCustomerByIdAndState(int id, boolean state) {
+            Optional<Customer> customer = customerRepo.findById(id);
+            if (customer.isPresent()) {
+                if(customer.get().isActiveState()==state){
+                    CustomerDTO customerDTO = customerMapper.entityToDTO(customer.get());
+                    return customerDTO;
+                }else{
+                    throw new com.example.newpos.posnew.exception.NotFoundException("this type customer not here");
+                }
+            }else{
+                throw new com.example.newpos.posnew.exception.NotFoundException("Not found customer");
+
+            }
+    }
 }
 
 

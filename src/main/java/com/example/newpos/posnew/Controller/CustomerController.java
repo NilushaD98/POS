@@ -107,5 +107,13 @@ public class CustomerController {
         String customerPresantStatus = customerService.getCustomerInactiveOrActiveByid(id);
         return customerPresantStatus;
     }
+    @GetMapping(
+            path= "get-by-customer-active-or-inactive/{id}",
+            params = "state"
+    )
+    public CustomerDTO getByIDAndState(@PathVariable(value="id")int id,@RequestParam(value= "state")boolean state) throws NotFoundException {
+        CustomerDTO customerDTO = customerService.getCustomerByIdAndState(id,state);
+        return customerDTO;
+    }
 
 }
