@@ -34,4 +34,10 @@ public class Item {
     @Column(name="selling_price",length = 100,nullable = false)
     private double sellingPrice;
 
+    @Column(name="active_state",columnDefinition = "TINYINT default 1")
+    private boolean activeState;
+
+    public Item(String itemName, String mesuringUnitstype, double balanceQty, double supplierPrice, double sellingPrice, boolean b) {
+
+    }
 }
