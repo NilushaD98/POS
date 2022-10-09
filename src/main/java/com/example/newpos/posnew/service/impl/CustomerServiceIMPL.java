@@ -162,7 +162,6 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NotFoundException("No Active Customer");
         }
     }
-
     @Override
     public String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO, int id) {
         if (customerRepo.existsById(id)) {
@@ -173,7 +172,6 @@ public class CustomerServiceIMPL implements CustomerService {
         }
 
     }
-
     @Override
     public List<CustomerDTO> getCusomerByNIC(String nic) throws NotFoundException {
         List<Customer> customerList = customerRepo.findAllByNicEquals(nic);
@@ -184,9 +182,7 @@ public class CustomerServiceIMPL implements CustomerService {
         } else {
             throw new NotFoundException("No any Customer to this nic number");
         }
-
     }
-
     @Override
     public CustomerEndpointIIResponseDTO getCustomerByIdOnlySallaryAndAddress(int id) throws NotFoundException {
 
@@ -200,7 +196,6 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new NotFoundException("this customer not here");
         }
     }
-
     @Override
     public String updateCustomerNSNByQuery(CustomerUpdateNSNByQueryRequestDTO customerUpdateNSNByQueryRequestDTO, int id) throws NotFoundException {
 

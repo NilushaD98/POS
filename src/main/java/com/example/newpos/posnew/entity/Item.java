@@ -4,6 +4,7 @@ import com.example.newpos.posnew.entity.enums.MesuringUnitsType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Builder
 @Entity
@@ -36,6 +37,10 @@ public class Item {
 
     @Column(name="active_state",columnDefinition = "TINYINT default 1")
     private boolean activeState;
+
+    @OneToMany(mappedBy = "item")
+    private Set<OrderDetails> orderDetails;
+
 
     public Item(String itemName, String mesuringUnitstype, double balanceQty, double supplierPrice, double sellingPrice, boolean b) {
 
