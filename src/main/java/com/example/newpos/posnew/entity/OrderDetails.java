@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,11 +27,11 @@ public class OrderDetails {
     @Column(name="qty",length = 100,nullable = false)
     private double Qty;
 
-    @Column(name="selling_price",length = 100,nullable = false)
-    private double sellingPrice;
-
     @Column(name="amount",nullable = false)
     private double amount;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Orders orders;
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;

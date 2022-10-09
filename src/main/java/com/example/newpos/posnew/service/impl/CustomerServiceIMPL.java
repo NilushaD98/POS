@@ -105,7 +105,6 @@ public class CustomerServiceIMPL implements CustomerService {
 //                    c.getNic(),
 //                    c.isActiveState()
 //            );
-
         List<CustomerDTO> customerDTOS = modelMapper
                 .map(getCustomer, new TypeToken<List<CustomerDTO>>() {
                 }.getType());

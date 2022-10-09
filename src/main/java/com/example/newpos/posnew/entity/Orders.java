@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,5 +29,12 @@ public class Orders {
     @Column(name="total",nullable = false)
     private double total;
 
+    @OneToMany(mappedBy = "orders")
+    private Set<OrderDetails> orderDetailsSet;
 
+    public Orders(Customer customer, Date date, double total) {
+        this.customer = customer;
+        this.date = date;
+        this.total = total;
+    }
 }
